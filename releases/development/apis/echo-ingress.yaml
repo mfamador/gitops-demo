@@ -10,7 +10,7 @@ metadata:
   namespace: dev
 spec:
   rules:
-  - host: echo.myhost.com
+  - host: echo.domain.com
     http:
       paths:
       - backend:

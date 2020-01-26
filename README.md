@@ -64,12 +64,5 @@ helm install --name helm-operator \
 ```
 export KUBECONFIG="$(k3d get-kubeconfig --name='k3s-default')"
 
-
-> kubectl get ingress -n dev                                                                           INT ✘  3s  defaultk3s-default ⎈  17:17:27 
-NAME   HOSTS             ADDRESS      PORTS   AGE
-echo   echo.myhost.com   172.21.0.3   80      12m
-
-> curl -H "host:echo.myhost.com" http://localhost:8080/
-
-
+curl -H "host:echo.domain.com" http://localhost:8080/
 ```

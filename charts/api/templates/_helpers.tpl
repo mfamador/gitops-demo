@@ -10,7 +10,7 @@ Expand the name of the chart.
 {{- if .Values.hostOverride -}}
 {{- default .Values.hostOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
-{{- printf "%s%s%s" "api-" .Release.Namespace ".veniam.com" -}}
+{{- printf "%s%s%s" "api-" .Release.Namespace ".domain.com" -}}
 {{- end -}}
 {{- end -}}
 

@@ -48,13 +48,8 @@ spec:
                subPath: {{.Values.configFilename}}
              {{- if .Values.certs }}
              - name: certs
-               {{- if eq .Values.certsMountPath "/veniam/app/" }}
-               mountPath: "{{ .Values.certsMountPath }}/public.crt"
-               subPath: public.crt
-               {{- else }}
                mountPath: {{ .Values.certsMountPath }}
                subPath: {{ .Values.certsMountSubPath }}
-               {{- end }}
              {{- end }}
           {{- end }}
           {{- if .Values.ports }}
