@@ -1,0 +1,10 @@
+{{- if and .Values.ingress.enabled .Values.ingress.rewrite -}}
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: {{ include "api.name" . }}-rewrite
+config:
+  replace:
+    uri: "/{{ .Values.ingress.rewrite }}/$(uri_captures[1])"
+plugin: request-transformer
+{{- end }}

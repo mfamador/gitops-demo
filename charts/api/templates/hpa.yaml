@@ -1,0 +1,52 @@
+{{- if .Values.hpa.enabled -}}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "api.name" . }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "api.name" . }}
+  minReplicas: {{ .Values.replicaCount }}
+  maxReplicas: {{ .Values.hpa.maxReplicas }}
+  metrics:
+  {{- if .Values.hpa.cpu }}
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.hpa.cpu }}
+  {{- end }}
+  {{- if .Values.hpa.memory }}
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.hpa.memory }}
+  {{- end }}
+  {{- if .Values.hpa.ingress_requests }}
+  - type: Object
+    object:
+      metric:
+        name: requests-per-second
+      describedObject:
+        apiVersion: networking.k8s.io/v1beta1
+        kind: Ingress
+        name: {{ template "api.name" . }}
+      target:
+        type: Value
+        value: {{ .Values.hpa.ingress_requests }}
+  {{- end }}
+  {{- if .Values.hpa.requests }}
+  - type: Object
+    object:
+      metric:
+        name: http_requests
+      target:
+        type: Value
+        value: {{ .Values.hpa.requests }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,50 @@
+{{- if .Values.ingressApicell.enabled -}}
+{{- $fullName := include "api.fullname" . -}}
+{{- $serviceName := include "api.serviceName" . -}}
+{{- $name := include "api.name" . -}}
+{{- $host := include "api.host" . -}}
+{{- $sec := split "." $host -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $name }}-apicell
+  labels: {{ include "api.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: {{ default "kong-apicell" .Values.ingressApicell.class }}
+  {{- with .Values.ingressApicell.annotations }}
+     {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+{{- if .Values.ingressApicell.tls }}
+  tls:
+  {{- if .Values.ingressApicell.tls.enabled }}
+    {{- range .Values.ingressApicell.hosts }}
+    - hosts:
+     {{- if .host }}
+      - {{ .host | quote }}
+      secretName: sec-{{- (split "." .host)._0 }}-apicell
+     {{- else }}
+      - {{ $host | quote }}
+      secretName: sec-{{- (split "." $host)._0 }}-apicell
+     {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+  rules:
+  {{- range .Values.ingressApicell.hosts }}
+    {{- if .host }}
+    - host: {{ .host | quote }}
+    {{- else}}
+    - host: {{ $host | quote }}
+    {{- end}}
+      http:
+        paths:
+        {{- range .paths }}
+          - path: {{ . }}{{- if and $.Values.ingress.enabled $.Values.ingress.rewrite -}}(.*){{- end}}
+            backend:
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $.Values.servicePort }}
+        {{- end }}
+  {{- end }}
+{{- end}}
+

@@ -1,0 +1,37 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: kong-dev
+  namespace: kong-dev
+  annotations:
+    flux.weave.works/automated: "true"
+    flux.weave.works/tag.chart-image: semver:~1.5
+    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: 'Env=dev'
+spec:
+  releaseName: kong-dev
+  chart:
+    repository: https://charts.konghq.com
+    name: kong
+    version: 1.1.1
+  values:
+    image:
+      pullPolicy: IfNotPresent
+      tag: 1.5.0
+    replicaCount: 1
+    ingressController:
+      enabled: true
+      ingressClass: kong-dev
+      installCRDs: true
+    env:
+      database: 'off'
+    postgresql:
+      enabled: false
+    proxy:
+      ingress:
+        enable: true
+      type: LoadBalancer
+    serviceMonitor:
+      enabled: true
+      labels:
+        release: prometheus-operator

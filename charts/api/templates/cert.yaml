@@ -1,0 +1,21 @@
+{{- if .Values.certs -}}
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: {{ template "api.name" . }}-certs
+  annotations:
+    sealedsecrets.bitnami.com/namespace-wide: "true"
+spec:
+  encryptedData:
+    {{- range $key, $value := .Values.certs }}
+    {{ $key }}: {{ $value }}
+    {{- end }}
+  template:
+    metadata:
+      creationTimestamp: null
+      name: {{ template "api.fullname" . }}-certs
+      namespace: {{ .Release.Namespace }}
+      annotations:
+        sealedsecrets.bitnami.com/namespace-wide: "true"
+{{- end}}

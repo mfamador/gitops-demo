@@ -1,0 +1,18 @@
+{{- if .Values.prometheus.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "api.name" . }}
+  labels: {{ include "api.labels" . | nindent 4 }}
+spec:
+  endpoints:
+  - scheme: http
+    targetPort: http
+  jobLabel: {{ include "api.name" . }}
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app: {{ include "api.name" . }}
+{{ end }}
