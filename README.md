@@ -3,6 +3,8 @@
 ## Create a k3d cluster with 2 workers
 ```
 k3d create --publish 8080:80 --workers 2
+
+export KUBECONFIG="$(k3d get-kubeconfig --name='k3s-default')"
 ```
 
 ## Install Helm
@@ -62,7 +64,5 @@ helm install --name helm-operator \
 ### Test
 
 ```
-export KUBECONFIG="$(k3d get-kubeconfig --name='k3s-default')"
-
 curl -H "host:echo.domain.com" http://localhost:8080/
 ```
