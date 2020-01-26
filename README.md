@@ -20,6 +20,13 @@ Add the fluxcd repo:
 helm repo add fluxcd https://charts.fluxcd.io
 ```
 
+Install the HelmRelease CRD:
+
+```
+kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/flux-helm-release-crd.yaml
+```
+
+
 ```
 export TILLER_NAMESPACE=kube-system
 export FLUX_FORWARD_NAMESPACE=flux
@@ -34,7 +41,7 @@ helm install --name flux \
 
 fluxctl identity --k8s-fwd-ns flux
 
-create a deploy key
+## create a deploy key
 
 helm install --name helm-operator \
 --set git.ssh.secretName=flux-git-deploy \
