@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong-dev
+  labels:
+    app: echo
+  name: echo
+  namespace: dev
+spec:
+  rules:
+  - host: echo.myhost.com
+    http:
+      paths:
+      - backend:
+          serviceName: echo
+          servicePort: 80
+        path: /

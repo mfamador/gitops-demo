@@ -1,14 +1,19 @@
 # Gitops workflow demo
 
+## Create a k3d cluster with 2 workers
+```
+k3d create --publish 8080:80 --workers 2
+```
+
 ## Install Helm
 
 ```
 kubectl create serviceaccount -n kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-admin --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 
 helm init --service-account tiller --tiller-namespace kube-system
 
 helm list
-
 ```
 
 
@@ -20,13 +25,13 @@ Add the fluxcd repo:
 helm repo add fluxcd https://charts.fluxcd.io
 ```
 
-Install the HelmRelease CRD:
+### Install the HelmRelease CRD:
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/flux-helm-release-crd.yaml
 ```
 
-
+### Install Flux:
 ```
 export TILLER_NAMESPACE=kube-system
 export FLUX_FORWARD_NAMESPACE=flux
@@ -40,15 +45,18 @@ helm install --name flux \
 --namespace flux fluxcd/flux 
 
 fluxctl identity --k8s-fwd-ns flux
+```
 
-## create a deploy key
+### Create a deploy key with write permissions on Githib
 
+    Settings -> Deploy keys -> Add deploy key
+
+### Install Flux Helm Operator
+```
 helm install --name helm-operator \
 --set git.ssh.secretName=flux-git-deploy \
 --set workers=2 \
 --namespace flux fluxcd/helm-operator 
-
 ```
-
 
 
