@@ -94,7 +94,7 @@ addEnv: {}
 config: {}
 
 configPath: /config/
-configFilename: producconfigurationtion.yaml
+configFilename: config.yaml
 
 secrets: {}
 
