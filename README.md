@@ -49,9 +49,9 @@ helm install --name flux \
 fluxctl identity --k8s-fwd-ns flux
 ```
 
-### Create a deploy key with write permissions on Githib
+### Create a deploy key on the github gitops repository with write permissions
 
-    Settings -> Deploy keys -> Add deploy key
+    Settings -> Deploy keys -> Add deploy key -> check write permission checkbox
 
 ### Install Flux Helm Operator
 ```
