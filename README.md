@@ -35,13 +35,12 @@ kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/d
 
 ### Install Flux:
 ```
-export TILLER_NAMESPACE=kube-system
-export FLUX_FORWARD_NAMESPACE=flux
+kubectl create ns flux
 
-helm install --name flux \
+helm install flux \
 --set rbac.create=true \
 --set git.url=git@github.com:mfamador/gitops-demo.git \
---set git.branch=master \
+--set git.branch=add_kustomize \
 --set git.path="releases/development\,releases/common" \
 --set git.pollInterval=120s \
 --namespace flux fluxcd/flux 
@@ -55,10 +54,19 @@ fluxctl identity --k8s-fwd-ns flux
 
 ### Install Flux Helm Operator
 ```
-helm install --name helm-operator \
+helm install helm-operator \
 --set git.ssh.secretName=flux-git-deploy \
 --set workers=2 \
 --namespace flux fluxcd/helm-operator 
+```
+
+
+Configure ServiceMonitor for Flux and Helm Operator
+
+```
+helm upgrade --reuse-values flux --set prometheus.enabled=true,prometheus.serviceMonitor.create=true,"prometheus.serviceMonitor.additionalLabels.release=prometheus-operator" fluxcd/flux
+
+helm upgrade --reuse-values helm-operator --set prometheus.enabled=true,prometheus.serviceMonitor.create=true,"prometheus.serviceMonitor.additionalLabels.release=prometheus-operator" fluxcd/helm-operator 
 ```
 
 ### Test
