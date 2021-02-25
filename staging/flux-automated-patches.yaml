@@ -1,0 +1,10 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: echo-api
+  namespace: core
+spec:
+  values:
+    image:
+      tag: "2.2"

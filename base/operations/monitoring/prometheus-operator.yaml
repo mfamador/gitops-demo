@@ -1,0 +1,26 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prometheus-operator
+spec:
+  releaseName: prometheus-operator
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: prometheus-operator
+    version: 8.13.8
+  grafana:
+    enabled: true
+    image:
+      tag: 7.0.0
+    admin:
+      existingSecret: grafana
+      userKey: admin-user
+      passwordKey: admin-password
+    ingress:
+      enabled: true
+      hosts:
+      - grafana.domain.com
+    additionalDataSources:
+    - name: Loki
+      type: Loki
+      url: http://loki:3100

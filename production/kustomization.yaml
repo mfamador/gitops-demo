@@ -1,0 +1,3 @@
+resources:
+- operations/monitoring
+- services/core

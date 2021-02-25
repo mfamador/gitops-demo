@@ -1,0 +1,16 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prometheus-operator
+spec:
+  chart:
+    version: 8.13.8
+  values:
+    grafana:
+      enabled: true
+      image:
+        tag: 7.0.0
+      ingress:
+        enabled: true
+        hosts:
+        - grafana.domain.com

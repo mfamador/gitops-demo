@@ -1,0 +1,4 @@
+resources:
+- ../../../base/services/core
+patchesStrategicMerge:
+- echo-api-release-patch.yaml

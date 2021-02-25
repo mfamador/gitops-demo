@@ -27,26 +27,31 @@ spec:
         type: Utilization
         averageUtilization: {{ .Values.hpa.memory }}
   {{- end }}
-  {{- if .Values.hpa.ingress_requests }}
-  - type: Object
-    object:
+  {{- if .Values.hpa.http_requests_sec }}
+  - type: Pods
+    pods:
       metric:
-        name: requests-per-second
-      describedObject:
-        apiVersion: networking.k8s.io/v1beta1
-        kind: Ingress
-        name: {{ template "api.name" . }}
+        name: echo_http_requests_per_second
       target:
-        type: Value
-        value: {{ .Values.hpa.ingress_requests }}
+        type: AverageValue
+        averageValue: {{ .Values.hpa.http_requests_sec }}
   {{- end }}
-  {{- if .Values.hpa.requests }}
-  - type: Object
-    object:
+  {{- if .Values.hpa.http_request_duration_seconds_avg }}
+  - type: Pods
+    pods:
       metric:
-        name: http_requests
+        name: echo_http_request_duration_seconds_avg
+      target:
+        type: AverageValue
+        averageValue: {{ .Values.hpa.http_request_duration_seconds_avg }}
+  {{- end }}
+  {{- if .Values.hpa.dev_digestor_lag }}
+  - type: External
+    external:
+      metric:
+        name: dev_digestor_lag
       target:
         type: Value
-        value: {{ .Values.hpa.requests }}
+        value: {{ .Values.hpa.dev_digestor_lag }}
   {{- end }}
 {{- end }}

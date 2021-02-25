@@ -1,0 +1,4 @@
+resources:
+- ../../../base/operations/monitoring
+patchesStrategicMerge:
+- prometheus-operator-patch.yaml

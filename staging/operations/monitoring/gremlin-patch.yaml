@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: gremlin
+spec:
+  chart:
+    version: 0.1.8
+  values:
+    gremlin:
+      secret:
+        clusterID: mapleleafstaging
+        managed: true
+        teamID: 1393b57b-05b3-5457-9898-c19c880bc379
+        teamSecret: a8e84efb-0ddb-4e40-a84e-fb0ddb3e40fc
+        type: secret

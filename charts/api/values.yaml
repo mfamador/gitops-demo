@@ -11,23 +11,16 @@ nameOverride: ""
 fullnameOverride: ""
 
 deployment:
-  containerPort: 8000
   antiaffinity:
     enabled: false
 
-livenessProbe:
-  path: "/healthz"
-  port: http
-  initialDelaySeconds: 5
+livenessProbe: {}
 
-readinessProbe:
-  path: "/healthz"
-  port: http
-  initialDelaySeconds: 5
+readinessProbe: {}
 
 ports:
 - name: http
-  containerPort: 8000
+  containerPort: 8080
   protocol: TCP
 
 service:
@@ -40,29 +33,6 @@ servicePort: http
 
 ingress:
   enabled: false
-  class: kong
-  annotations: {}
-  hosts:
-  - host: example1.local
-    paths: ["/v2/api"]
-  - host: example2.local
-    paths: ["/v1/api"]
-  rewrite: ""
-  tls:
-    enabled: false
-
-ingressApicell:
-  enabled: false
-  class: kong-apicell
-  annotations: {}
-  hosts:
-  - host: example1.local
-    paths: ["/v2/api"]
-  - host: example2.local
-    paths: ["/v1/api"]
-  rewrite: ""
-  tls:
-    enabled: false
 
 prometheus:
   enabled: true
@@ -71,23 +41,12 @@ annotations: {}
 
 labels: {}
 
-resources:
-  requests:
-    cpu: 56m
-    memory: 128Mi
-  limits:
-    cpu: 250m
-    memory: 512Mi
+resources: {}
 
 hpa:
-  enabled: true
-  maxReplicas: 5
-  cpu: 95
-  memory: 95
+  enabled: false
 
-env:
-- name: SERVER_PORT
-  value: "8000"
+env: {}
 
 addEnv: {}
 

@@ -1,0 +1,15 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prometheus-adapter
+spec:
+  releaseName: prometheus-adapter
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: prometheus-adapter
+    version: 2.3.1
+  values:
+    rules:
+      default: false
+    prometheus:
+      url: http://prometheus-operated.monitoring.svc.cluster.local

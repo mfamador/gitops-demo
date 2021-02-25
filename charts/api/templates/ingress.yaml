@@ -1,16 +1,14 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "api.fullname" . -}}
-{{- $serviceName := include "api.serviceName" . -}}
 {{- $name := include "api.name" . -}}
 {{- $host := include "api.host" . -}}
 {{- $sec := split "." $host -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ $name }}
   labels: {{ include "api.labels" . | nindent 4 }}
   annotations:
-    kubernetes.io/ingress.class: {{ default "kong" .Values.ingress.class }}
   {{- with .Values.ingress.annotations }}
      {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -40,9 +38,9 @@ spec:
       http:
         paths:
         {{- range .paths }}
-          - path: {{ . }}{{- if and $.Values.ingress.enabled $.Values.ingress.rewrite -}}(.*){{- end}}
+          - path: {{ . }}
             backend:
-              serviceName: {{ $serviceName }}
+              serviceName: {{ $name }}
               servicePort: {{ $.Values.servicePort }}
         {{- end }}
   {{- end }}

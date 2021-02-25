@@ -1,0 +1,23 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: echo-api
+  namespace: core
+spec:
+  helmVersion: v3
+  releaseName: echo-api
+  chart:
+    git: git@github.com:mfamador/gitops-kustomize-demo
+    path: charts/api
+    ref: master
+  values:
+    image:
+      repository: gcr.io/kubernetes-e2e-test-images/echoserver
+      tag: 2.0
+      pullPolicy: IfNotPresent
+    replicaCount: 1
+    ingress:
+      enabled: true
+      hosts:
+      - host: "echo.domain.com"
+        paths: ["/"]
