@@ -1,3 +1,0 @@
-resources:
-- manifests/namespace.yaml
-- echo-api-release.yaml

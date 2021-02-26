@@ -1,4 +1,0 @@
-bases:
-- operations/flux
-- operations/monitoring
-- services/core

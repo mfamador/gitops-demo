@@ -1,6 +1,0 @@
-bases:
-- ../../../base/operations/monitoring
-patchesStrategicMerge:
-- loki-patch.yaml
-- prometheus-operator-patch.yaml
-- prometheus-adapter-patch.yaml

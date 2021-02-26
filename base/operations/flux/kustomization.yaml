@@ -1,3 +1,0 @@
-namespace: flux
-resources:
-- manifests/flux-service-monitor.yaml

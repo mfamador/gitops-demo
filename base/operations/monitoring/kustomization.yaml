@@ -1,7 +1,0 @@
-namespace: monitoring
-resources:
-- manifests/flux-rules.yaml
-- manifests/namespace.yaml
-- loki.yaml
-- prometheus-adapter.yaml
-- prometheus-operator.yaml
