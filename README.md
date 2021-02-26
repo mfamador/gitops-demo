@@ -10,13 +10,13 @@
     k3d cluster create -p 8080:80@loadbalancer --agents 3
 
 If you need another worker
-    
+
     k3d add-node
 
 ## Install Helm 3
 
 MacOS
-    
+
     brew install helm@3
 
 [Other OS](https://helm.sh/docs/intro/install/)
@@ -44,7 +44,7 @@ helm install flux \
 --set git.pollInterval=120s \
 --set manifestGeneration=true \
 --set syncGarbageCollection.enabled=true \
---namespace flux fluxcd/flux 
+--namespace flux fluxcd/flux
 
 fluxctl identity --k8s-fwd-ns flux
 ```
@@ -59,7 +59,7 @@ helm upgrade -i helm-operator \
 --set git.ssh.secretName=flux-git-deploy \
 --set workers=2 \
 --set helm.versions=v3 \
---namespace flux fluxcd/helm-operator 
+--namespace flux fluxcd/helm-operator
 ````
 
 ## Test
