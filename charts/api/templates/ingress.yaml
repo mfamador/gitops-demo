@@ -1,8 +1,8 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "api.fullname" . -}}
-{{- $name := include "api.name" . -}}
-{{- $host := include "api.host" . -}}
-{{- $sec := split "." $host -}}
+  {{- $fullName := include "api.fullname" . -}}
+  {{- $name := include "api.name" . -}}
+  {{- $host := include "api.host" . -}}
+  {{- $sec := split "." $host -}}
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
@@ -10,38 +10,38 @@ metadata:
   labels: {{ include "api.labels" . | nindent 4 }}
   annotations:
   {{- with .Values.ingress.annotations }}
-     {{- toYaml . | nindent 4 }}
+  {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.ingress.tls }}
+  {{- if .Values.ingress.tls }}
   tls:
-  {{- if .Values.ingress.tls.enabled }}
+    {{- if .Values.ingress.tls.enabled }}
     {{- range .Values.ingress.hosts }}
-    - hosts:
-     {{- if .host }}
-      - {{ .host | quote }}
-      secretName: sec-{{- (split "." .host)._0 }}
-     {{- else }}
-      - {{ $host | quote }}
-      secretName: sec-{{- (split "." $host)._0 }}
-     {{- end }}
+  - hosts:
+      {{- if .host }}
+    - {{ .host | quote }}
+    secretName: sec-{{- (split "." .host)._0 }}
+      {{- else }}
+    - {{ $host | quote }}
+    secretName: sec-{{- (split "." $host)._0 }}
     {{- end }}
   {{- end }}
-{{- end }}
-  rules:
-  {{- range .Values.ingress.hosts }}
-    {{- if .host }}
-    - host: {{ .host | quote }}
-    {{- else}}
-    - host: {{ $host | quote }}
-    {{- end}}
-      http:
-        paths:
-        {{- range .paths }}
-          - path: {{ . }}
-            backend:
-              serviceName: {{ $name }}
-              servicePort: {{ $.Values.servicePort }}
-        {{- end }}
   {{- end }}
-{{- end}}
+  {{- end }}
+  rules:
+    {{- range .Values.ingress.hosts }}
+    {{- if .host }}
+  - host: {{ .host | quote }}
+    {{- else}}
+  - host: {{ $host | quote }}
+    {{- end}}
+    http:
+      paths:
+        {{- range .paths }}
+      - path: {{ . }}
+        backend:
+          serviceName: {{ $name }}
+          servicePort: {{ $.Values.servicePort }}
+  {{- end }}
+  {{- end }}
+  {{- end}}

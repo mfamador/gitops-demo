@@ -15,4 +15,4 @@ spec:
   selector:
     matchLabels:
       app: {{ include "api.name" . }}
-{{ end }}
+  {{ end }}

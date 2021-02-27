@@ -10,7 +10,7 @@ spec:
   encryptedData:
     {{- range $key, $value := .Values.certs }}
     {{ $key }}: {{ $value }}
-    {{- end }}
+  {{- end }}
   template:
     metadata:
       creationTimestamp: null
@@ -18,4 +18,4 @@ spec:
       namespace: {{ .Release.Namespace }}
       annotations:
         sealedsecrets.bitnami.com/namespace-wide: "true"
-{{- end}}
+  {{- end}}

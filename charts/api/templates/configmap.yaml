@@ -5,4 +5,4 @@ metadata:
   name: {{ template "api.name" . }}
 data:
   {{.Values.configFilename}}: |- {{- toYaml .Values.config | nindent 4 }}
-{{- end}}
+    {{- end}}

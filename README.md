@@ -10,20 +10,18 @@ _For the original example see [flux2-kustomize-helm-example](https://github.com/
 
 # Scenario
 
-For this example we assume a scenario with two clusters: staging and production, both having multiple regions each.
-The end goal is to leverage Flux and Kustomize to manage both clusters while minimizing duplicated declarations.
+For this example we assume a scenario with two clusters: staging and production, both having multiple regions each. The
+end goal is to leverage Flux and Kustomize to manage both clusters while minimizing duplicated declarations.
 
 We will configure Flux to install, test and upgrade a demo app using
-`HelmRepository` and `HelmRelease` custom resources.
-Flux will monitor the Helm repository, and it will automatically
+`HelmRepository` and `HelmRelease` custom resources. Flux will monitor the Helm repository, and it will automatically
 upgrade the Helm releases to their latest chart version based on semver ranges.
 
 ## Prerequisites
 
-You will need a Kubernetes cluster version 1.16 or newer and kubectl version 1.18.
-For a quick local test, you can use [Kubernetes kind](https://kind.sigs.k8s.io/docs/user/quick-start/) or
-[k3d](https://k3d.io/#installation).
-Any other Kubernetes setup will work as well though.
+You will need a Kubernetes cluster version 1.16 or newer and kubectl version 1.18. For a quick local test, you can
+use [Kubernetes kind](https://kind.sigs.k8s.io/docs/user/quick-start/) or
+[k3d](https://k3d.io/#installation). Any other Kubernetes setup will work as well though.
 
 In order to follow the guide you'll need a GitHub account and a
 [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
@@ -158,8 +156,8 @@ spec:
         - podinfo.staging,eun
 ```
 
-Note that with ` version: ">=1.0.0-alpha"` we configure Flux to automatically upgrade
-the `HelmRelease` to the latest chart version including alpha, beta and pre-releases.
+Note that with ` version: ">=1.0.0-alpha"` we configure Flux to automatically upgrade the `HelmRelease` to the latest
+chart version including alpha, beta and pre-releases.
 
 In **environments/production/<region>/** dir we have a Kustomize patch with the production specific values:
 
@@ -179,8 +177,8 @@ spec:
         - podinfo.production.eun
 ```
 
-Note that with ` version: ">=1.0.0"` we configure Flux to automatically upgrade
-the `HelmRelease` to the latest stable chart version (alpha, beta and pre-releases will be ignored).
+Note that with ` version: ">=1.0.0"` we configure Flux to automatically upgrade the `HelmRelease` to the latest stable
+chart version (alpha, beta and pre-releases will be ignored).
 
 Infrastructure:
 
@@ -220,8 +218,8 @@ spec:
   url: https://charts.bitnami.com/bitnami
 ```
 
-Note that with ` interval: 5m` we configure Flux to pull the Helm repository index every five minutes.
-If the index contains a new chart version that matches a `HelmRelease` semver range, Flux will upgrade the release.
+Note that with ` interval: 5m` we configure Flux to pull the Helm repository index every five minutes. If the index
+contains a new chart version that matches a `HelmRelease` semver range, Flux will upgrade the release.
 
 ## Bootstrap staging and production
 
@@ -253,7 +251,7 @@ metadata:
 spec:
   interval: 10m0s
   dependsOn:
-    - name: infrastructure
+  - name: infrastructure
   sourceRef:
     kind: GitRepository
     name: flux-sytem
@@ -303,8 +301,8 @@ flux bootstrap github \
     --path=clusters/staging/eun
 ```
 
-The bootstrap command commits the environments for the Flux components in `clusters/staging/eun/flux-system` dir
-and creates a deploy key with read-only access on GitHub, so it can pull changes inside the cluster.
+The bootstrap command commits the environments for the Flux components in `clusters/staging/eun/flux-system` dir and
+creates a deploy key with read-only access on GitHub, so it can pull changes inside the cluster.
 
 Watch for the Helm releases being install on staging:
 
@@ -352,8 +350,8 @@ infrastructure	main/797cd90cc8e81feb30cfe471a5186b86daf2758d	True
 
 ## Encrypt Kubernetes secrets
 
-In order to store secrets safely in a Git repository,
-you can use Mozilla's SOPS CLI to encrypt Kubernetes secrets with OpenPGP or KMS.
+In order to store secrets safely in a Git repository, you can use Mozilla's SOPS CLI to encrypt Kubernetes secrets with
+OpenPGP or KMS.
 
 Install [gnupg](https://www.gnupg.org/) and [sops](https://github.com/mozilla/sops):
 
@@ -464,7 +462,6 @@ spec:
 Find out more about Helm releases values overrides in the
 [docs](https://toolkit.fluxcd.io/components/helm/helmreleases/#values-overrides).
 
-
 ## Add clusters
 
 If you want to add a cluster to your fleet, first clone your repo locally:
@@ -488,8 +485,8 @@ cp clusters/staging/eun/operations.yaml clusters/dev
 cp clusters/staging/eun/services.yaml clusters/dev
 ```
 
-You could create a dev overlay inside `services` and `operations`, make sure
-to change the `spec.path` inside `clusters/dev/eun/services.yaml` to `path: ./environments/dev/eun`.
+You could create a dev overlay inside `services` and `operations`, make sure to change the `spec.path`
+inside `clusters/dev/eun/services.yaml` to `path: ./environments/dev/eun`.
 
 Push the changes to main branch:
 
@@ -511,10 +508,12 @@ flux bootstrap github \
 
 ## Testing
 
-Any change to the Kubernetes manifests or to the repository structure should be validated in CI before
-a pull requests is merged into the main branch and synced on the cluster.
+Any change to the Kubernetes manifests or to the repository structure should be validated in CI before a pull requests
+is merged into the main branch and synced on the cluster.
 
 This repository contains the following GitHub CI workflows:
 
-* the [test](./.github/workflows/test.yaml) workflow validates the Kubernetes manifests and Kustomize overlays with kubeval
-* the [e2e](./.github/workflows/e2e.yaml) workflow starts a Kubernetes cluster in CI and tests the staging setup by running Flux in Kubernetes Kind
+* the [test](./.github/workflows/test.yaml) workflow validates the Kubernetes manifests and Kustomize overlays with
+  kubeval
+* the [e2e](./.github/workflows/e2e.yaml) workflow starts a Kubernetes cluster in CI and tests the staging setup by
+  running Flux in Kubernetes Kind

@@ -6,7 +6,7 @@ spec:
   values:
     ingress:
       hosts:
-        - host: echo.staging.eun
-          paths:
-          - "/"
+      - host: echo.staging.eun
+        paths:
+        - "/"
 

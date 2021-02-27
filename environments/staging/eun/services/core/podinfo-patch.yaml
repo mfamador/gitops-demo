@@ -11,4 +11,4 @@ spec:
   values:
     ingress:
       hosts:
-        - podinfo.staging.eun
+      - podinfo.staging.eun

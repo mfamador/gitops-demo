@@ -6,7 +6,7 @@ image:
   tag: 1.0.0
   pullPolicy: Always
 
-imagePullSecrets: []
+imagePullSecrets: [ ]
 nameOverride: ""
 fullnameOverride: ""
 
@@ -14,9 +14,9 @@ deployment:
   antiaffinity:
     enabled: false
 
-livenessProbe: {}
+livenessProbe: { }
 
-readinessProbe: {}
+readinessProbe: { }
 
 ports:
 - name: http
@@ -27,7 +27,7 @@ service:
   type: ClusterIP
   port: 80
   sslport: 443
-  annotations: {}
+  annotations: { }
 
 servicePort: http
 
@@ -37,33 +37,33 @@ ingress:
 prometheus:
   enabled: false
 
-annotations: {}
+annotations: { }
 
-labels: {}
+labels: { }
 
-resources: {}
+resources: { }
 
 hpa:
   enabled: false
 
-env: {}
+env: { }
 
-addEnv: {}
+addEnv: { }
 
-config: {}
+config: { }
 
 configPath: /config/
 configFilename: config.yaml
 
-secrets: {}
+secrets: { }
 
-certs: {}
+certs: { }
 
 certsMountPath: /app/secrets/
-certsMountSubPath: {}
+certsMountSubPath: { }
 
-nodeSelector: {}
+nodeSelector: { }
 
-tolerations: []
+tolerations: [ ]
 
-affinity: {}
+affinity: { }
