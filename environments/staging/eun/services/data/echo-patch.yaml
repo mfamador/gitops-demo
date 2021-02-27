@@ -7,3 +7,6 @@ spec:
     ingress:
       hosts:
         - host: echo.staging.eun
+          paths:
+          - "/"
+
