@@ -1,4 +1,4 @@
-# GitOps Workflow on a Multi-Cluster and Multi-Region Kubernetes Architecture with Flux v2
+# GitOps Workflow with Flux v2
 
 [![test](https://github.com/mfamador/gitops-demo/workflows/test/badge.svg)](https://github.com/mfamador/gitops-demo/actions)
 [![e2e](https://github.com/mfamador/gitops-demo/workflows/e2e/badge.svg)](https://github.com/mfamador/gitops-demo/actions)
