@@ -268,8 +268,8 @@ spec:
   path: ./manifests/staging/eun/infrastructure
 ```
 
-Note that with `path: ./manifests/staging` we configure Flux to sync the staging Kustomize overlay and
-with `dependsOn` we tell Flux to create the infrastructure items before deploying the apps.
+Note that with `path: ./manifests/staging/eun/services` we configure Flux to sync the staging Kustomize overlay and
+with `dependsOn` we tell Flux to create the infrastructure items before deploying the services.
 
 Fork this repository on your personal GitHub account and export your GitHub access token, username and repo name:
 
