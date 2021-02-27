@@ -133,7 +133,7 @@ spec:
       path: "/*"
 ```
 
-In **manifests/staging/** dir we have a Kustomize patch with the staging specific values:
+In **manifests/staging/<region>/** dir we have a Kustomize patch with the staging specific values:
 
 ```yaml
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -149,13 +149,13 @@ spec:
   values:
     ingress:
       hosts:
-        - podinfo.staging
+        - podinfo.staging,eun
 ```
 
 Note that with ` version: ">=1.0.0-alpha"` we configure Flux to automatically upgrade
 the `HelmRelease` to the latest chart version including alpha, beta and pre-releases.
 
-In **manifests/production/** dir we have a Kustomize patch with the production specific values:
+In **manifests/production/<region>/** dir we have a Kustomize patch with the production specific values:
 
 ```yaml
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -170,7 +170,7 @@ spec:
   values:
     ingress:
       hosts:
-        - podinfo.production
+        - podinfo.production.eun
 ```
 
 Note that with ` version: ">=1.0.0"` we configure Flux to automatically upgrade
@@ -382,15 +382,15 @@ Generate a Kubernetes secret manifest and encrypt the secret's data field with s
 kubectl -n redis create secret generic redis-auth \
 --from-literal=password=change-me \
 --dry-run=client \
--o yaml > infrastructure/redis/redis-auth.yaml
+-o yaml > manifests/staging/eun/infrastructure/redis/redis-auth.yaml
 
 sops --encrypt \
 --pgp=1F3D1CED2F865F5E59CA564553241F147E7C5FA4 \
 --encrypted-regex '^(data|stringData)$' \
---in-place infrastructure/redis/redis-auth.yaml
+--in-place manifests/staging/eun/infrastructure/redis/redis-auth.yaml
 ```
 
-Add the secret to `infrastructure/redis/kustomization.yaml`:
+Add the secret to `manifests/staging/eun/infrastructure/redis/kustomization.yaml`:
 
 ```yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
