@@ -4,17 +4,6 @@
 [![e2e](https://github.com/mfamador/gitops-demo/workflows/e2e/badge.svg)](https://github.com/mfamador/gitops-demo/actions)
 [![license](https://img.shields.io/github/license/mfamador/gitops-demo.svg)](https://github.com/mfamador/gitops-demo/blob/main/LICENSE)
 
-
-## Create a local Kubernetes cluster, e.g. with 3 worker nodes
-
-    k3d cluster create -p 8080:80@loadbalancer --agents 3
-
-If you need another worker
-
-    k3d add-node
-
----
-
 For this example we assume a scenario with two clusters: staging and production.
 The end goal is to leverage Flux and Kustomize to manage both clusters while minimizing duplicated declarations.
 
