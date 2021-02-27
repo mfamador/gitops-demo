@@ -313,9 +313,9 @@ redis    	redis  	11.3.4  	False    	True 	release reconciliation succeeded
 Verify that the demo app can be accessed via ingress:
 
 ```console
-$ kubectl -n nginx port-forward svc/nginx-ingress-controller 8080:80 &
+$ kubectl -n nginx port-forward svc/nginx-ingress-controller 8888:80 &
 
-$ curl -H "Host: podinfo.staging.eun" http://localhost:8080
+$ curl -H "Host: podinfo.staging.eun" http://localhost:8888
 {
   "hostname": "podinfo-59489db7b5-lmwpn",
   "version": "5.0.3"
