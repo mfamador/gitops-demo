@@ -3,11 +3,6 @@ kind: HelmRelease
 metadata:
   name: echo
 spec:
-  chart:
-    spec:
-      version: ">=1.0.0-alpha"
-  test:
-    enable: false
   values:
     ingress:
       hosts:
