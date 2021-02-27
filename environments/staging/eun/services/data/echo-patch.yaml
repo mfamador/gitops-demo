@@ -9,4 +9,3 @@ spec:
       - host: echo.staging.eun
         paths:
         - "/"
-

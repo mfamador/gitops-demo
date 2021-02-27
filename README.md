@@ -98,16 +98,16 @@ The environments' configuration is structured into:
 │   ├── usea
 │   └── usew
 └── staging
-     ├── eun
-     │   ├── infrastructure
-     │   ├── operations
-     │   └── services
-     │       ├── core
-     │       │   ├── kustomization.yam
-     │       │   └── podinfo-patch.yam
-     │       ├── data
-     │       └── kustomization.yaml
-     └── euw
+    ├── eun
+    │   ├── infrastructure
+    │   ├── operations
+    │   └── services
+    │       ├── core
+    │       │   ├── kustomization.yam
+    │       │   └── podinfo-patch.yam
+    │       ├── data
+    │       └── kustomization.yaml
+    └── euw
 ```
 
 In **environments/base/services/core/podinfo/** dir we have a HelmRelease with common values for all clusters:
