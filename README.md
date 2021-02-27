@@ -51,29 +51,29 @@ The Git repository contains the following top directories:
 ```
 ├── environments
 │   ├── base
-│   │     ├── infrastructure
-│   │     ├── operations
-│   │     └── services
+│   │   ├── infrastructure
+│   │   ├── operations
+│   │   └── services
 │   ├── production
-│   │     ├── eun
-│   │     ├── euw
-│   │     ├── usea
-│   │     └── usew
+│   │   ├── eun
+│   │   ├── euw
+│   │   ├── usea
+│   │   └── usew
 │   └── staging
-│         ├── eun
-│         │    ├── infrastructure
-│         │    ├── operations
-│         │    └── services
-│         └── euw
+│       ├── eun
+│       │   ├── infrastructure
+│       │   ├── operations
+│       │   └── services
+│       └── euw
 └── clusters
     ├── production
-    │     ├── eun
-    │     ├── euw
-    │     ├── usea
-    │     └── usew
+    │   ├── eun
+    │   ├── euw
+    │   ├── usea
+    │   └── usew
     └── staging
-          ├── eun
-          └── euw
+        ├── eun
+        └── euw
 ```
 
 The environments' configuration is structured into:
@@ -86,30 +86,30 @@ The environments' configuration is structured into:
 ./environments/
 
 ├── base
-│     ├── infrastructure
-│     ├── operations
-│     └── services
-│           ├── core
-│           │     ├── kustomization.yam
-│           │     ├── namespace.yam
-│           │     └── podinfo.yam
-│           └── data
+│   ├── infrastructure
+│   ├── operations
+│   └── services
+│       ├── core
+│       │   ├── kustomization.yam
+│       │   ├── namespace.yam
+│       │   └── podinfo.yam
+│       └── data
 ├── production
-│     ├── eun
-│     ├── euw
-│     ├── usea
-│     └── usew
+│   ├── eun
+│   ├── euw
+│   ├── usea
+│   └── usew
 └── staging
-      ├── eun
-      │    ├── infrastructure
-      │    ├── operations
-      │    └── services
-      │           ├── core
-      │           │     ├── kustomization.yam
-      │           │     └── podinfo-patch.yam
-      │           ├── data
-      │           └── kustomization.yaml
-      └── euw
+     ├── eun
+     │   ├── infrastructure
+     │   ├── operations
+     │   └── services
+     │       ├── core
+     │       │   ├── kustomization.yam
+     │       │   └── podinfo-patch.yam
+     │       ├── data
+     │       └── kustomization.yaml
+     └── euw
 ```
 
 In **environments/base/services/core/podinfo/** dir we have a HelmRelease with common values for all clusters:
@@ -187,13 +187,13 @@ Infrastructure:
 ```
 ./environments/base/infrastructure/
 ├── nginx
-│   ├── kustomization.yaml
-│   ├── namespace.yaml
-│   └── release.yaml
+│   ├── kustomization.yaml
+│   ├── namespace.yaml
+│   └── release.yaml
 ├── redis
-│   ├── kustomization.yaml
-│   ├── namespace.yaml
-│   └── release.yaml
+│   ├── kustomization.yaml
+│   ├── namespace.yaml
+│   └── release.yaml
 └── sources
     ├── bitnami.yaml
     ├── kustomization.yaml
@@ -230,16 +230,16 @@ The clusters dir contains the Flux configuration:
 ```
 ./clusters/
 ├── production
-│     ├── eun
-│     ├── euw
-│     ├── usea
-│     └── usew
+│   ├── eun
+│   ├── euw
+│   ├── usea
+│   └── usew
 └── staging
-      ├── eun
-      │    ├── infrastructure.yaml
-      │    ├── operations.yaml
-      │    └── services.yaml
-      └── euw
+    ├── eun
+    │   ├── infrastructure.yaml
+    │   ├── operations.yaml
+    │   └── services.yaml
+    └── euw
 ```
 
 In **clusters/staging/** dir we have the Kustomization definitions:
