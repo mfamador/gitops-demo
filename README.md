@@ -4,7 +4,13 @@
 [![e2e](https://github.com/mfamador/gitops-demo/workflows/e2e/badge.svg)](https://github.com/mfamador/gitops-demo/actions)
 [![license](https://img.shields.io/github/license/mfamador/gitops-demo.svg)](https://github.com/mfamador/gitops-demo/blob/main/LICENSE)
 
-For this example we assume a scenario with two clusters: staging and production.
+_For the original example see [flux2-kustomize-helm-example](https://github.com/fluxcd/flux2-kustomize-helm-example)._
+
+---
+
+# Scenario
+
+For this example we assume a scenario with two clusters: staging and production, both having multiple regions each.
 The end goal is to leverage Flux and Kustomize to manage both clusters while minimizing duplicated declarations.
 
 We will configure Flux to install, test and upgrade a demo app using
@@ -70,9 +76,9 @@ The Git repository contains the following top directories:
           └── euw
 ```
 
-The environments configuration is structured into:
+The environments' configuration is structured into:
 
-- **environments/base/** dir contains namespaces and Helm release definitions
+- **environments/base/** dir contains common namespaces and Helm release definitions
 - **environments/production/** dir contains the production Helm release values
 - **environments/staging/** dir contains the staging values
 
