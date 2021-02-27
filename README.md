@@ -1,4 +1,4 @@
-# GitOps workflow demo with Flux 2
+# Multi-Cluster and Multi-Region GitOps Workflow with Flux 2
 
 [![test](https://github.com/mfamador/gitops-demo/workflows/test/badge.svg)](https://github.com/mfamador/gitops-demo/actions)
 [![e2e](https://github.com/mfamador/gitops-demo/workflows/e2e/badge.svg)](https://github.com/mfamador/gitops-demo/actions)
