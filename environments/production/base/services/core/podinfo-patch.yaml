@@ -3,7 +3,10 @@ kind: HelmRelease
 metadata:
   name: podinfo
 spec:
+  chart:
+    spec:
+      version: ">=1.0.0-alpha"
+  test:
+    enable: false
   values:
-    ingress:
-      hosts:
-      - podinfo.staging.eun
+

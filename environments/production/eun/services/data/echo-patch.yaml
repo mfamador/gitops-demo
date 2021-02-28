@@ -1,9 +1,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: podinfo
+  name: echo
 spec:
   values:
     ingress:
       hosts:
-      - podinfo.staging.eun
+      - host: echo.production.eun
+        paths:
+        - "/"
