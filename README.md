@@ -53,16 +53,39 @@ The Git repository contains the following top directories:
 │   │   ├── operations
 │   │   └── services
 │   ├── production
+│   │   ├── base
+│   │   │   ├── infrastructure
+│   │   │   ├── operations
+│   │   │   └── services
 │   │   ├── eun
+│   │   │   ├── infrastructure
+│   │   │   ├── operations
+│   │   │   └── services
 │   │   ├── euw
+│   │   │   ├── infrastructure
+│   │   │   ├── operations
+│   │   │   └── services
 │   │   ├── usea
+│   │   │   ├── infrastructure
+│   │   │   ├── operations
+│   │   │   └── services
 │   │   └── usew
+│   │       ├── infrastructure
+│   │       ├── operations
+│   │       └── services
 │   └── staging
+│       ├── base
+│       │   ├── infrastructure
+│       │   ├── operations
+│       │   └── services
 │       ├── eun
 │       │   ├── infrastructure
 │       │   ├── operations
 │       │   └── services
 │       └── euw
+│           ├── infrastructure
+│           ├── operations
+│           └── services
 └── clusters
     ├── production
     │   ├── eun
@@ -88,26 +111,52 @@ The environments' configuration is structured into:
 │   ├── operations
 │   └── services
 │       ├── core
-│       │   ├── kustomization.yam
-│       │   ├── namespace.yam
-│       │   └── podinfo.yam
-│       └── data
+│       │   ├── kustomization.yaml
+│       │   ├── namespace.yaml
+│       │   └── podinfo.yaml
+│       ├── data
+│       │   ├── kustomization.yaml
+│       │   ├── namespace.yaml
+│       │   └── echo.yaml
+│       └── kustomization.yaml
 ├── production
+│   ├── base
 │   ├── eun
 │   ├── euw
 │   ├── usea
 │   └── usew
 └── staging
+    ├── base
+    │   ├── infrastructure
+    │   ├── operations
+    │   └── services
+    │       ├── core
+    │       │   ├── kustomization.yaml
+    │       │   └── podinfo-patch.yaml
+    │       ├── data
+    │       │   ├── kustomization.yaml
+    │       │   └── echo-patch.yaml
+    │       └── kustomization.yaml
     ├── eun
     │   ├── infrastructure
     │   ├── operations
     │   └── services
     │       ├── core
-    │       │   ├── kustomization.yam
-    │       │   └── podinfo-patch.yam
+    │       │   ├── kustomization.yaml
+    │       │   └── podinfo-patch.yaml
     │       ├── data
+    │       │   ├── kustomization.yaml
+    │       │   └── echo-patch.yaml
     │       └── kustomization.yaml
     └── euw
+        ├── infrastructure
+        ├── operations
+        └── services
+            ├── core
+            │   ├── kustomization.yaml
+            │   └── podinfo-patch.yaml
+            ├── data
+            └── kustomization.yaml
 ```
 
 In **environments/base/services/core/podinfo/** dir we have a HelmRelease with common values for all clusters:
@@ -229,15 +278,30 @@ The clusters dir contains the Flux configuration:
 ./clusters/
 ├── production
 │   ├── eun
+│   │   ├── infrastructure.yaml
+│   │   ├── operations.yaml
+│   │   └── services.yaml
 │   ├── euw
+│   │   ├── infrastructure.yaml
+│   │   ├── operations.yaml
+│   │   └── services.yaml
 │   ├── usea
+│   │   ├── infrastructure.yaml
+│   │   ├── operations.yaml
+│   │   └── services.yaml
 │   └── usew
+│       ├── infrastructure.yaml
+│       ├── operations.yaml
+│       └── services.yaml
 └── staging
     ├── eun
     │   ├── infrastructure.yaml
     │   ├── operations.yaml
     │   └── services.yaml
     └── euw
+        ├── infrastructure.yaml
+        ├── operations.yaml
+        └── services.yaml
 ```
 
 In **clusters/staging/** dir we have the Kustomization definitions:
@@ -289,7 +353,7 @@ Verify that your staging cluster satisfies the prerequisites with:
 flux check --pre
 ```
 
-Set the kubectl context to your staging cluster and bootstrap Flux:
+Set the kubectl context to your `eun` staging cluster and bootstrap Flux:
 
 ```sh
 flux bootstrap github \
