@@ -10,6 +10,8 @@ image:
     interval: 1m0s
     semver:
       expr: 1.0.x
+    namespace: flux-system
+
 
 imagePullSecrets: [ ]
 nameOverride: ""
