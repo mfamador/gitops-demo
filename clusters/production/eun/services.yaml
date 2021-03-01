@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./environments/production/eun/services
+  path: ./clusters/production/eun/services
   prune: true
   validation: client
   healthChecks:

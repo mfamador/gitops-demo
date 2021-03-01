@@ -10,6 +10,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./environments/production/usea/operations
+  path: ./clusters/production/usea/operations
   prune: true
   validation: client

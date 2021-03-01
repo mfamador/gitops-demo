@@ -43,11 +43,11 @@ curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
 
 The Git repository contains the following top directories:
 
-- **environments/** dir contains Helm releases with a custom configuration per cluster
+- **clusters/** dir contains Helm releases with a custom configuration per cluster
 - **clusters** dir contains the Flux configuration per cluster
 
 ```
-├── environments
+├── clusters
 │   ├── base
 │   │   ├── infrastructure
 │   │   ├── operations
@@ -97,14 +97,14 @@ The Git repository contains the following top directories:
         └── euw
 ```
 
-The environments' configuration is structured into:
+The clusters' configuration is structured into:
 
-- **environments/base/** dir contains common namespaces and Helm release definitions
-- **environments/production/** dir contains the production Helm release values
-- **environments/staging/** dir contains the staging values
+- **clusters/base/** dir contains common namespaces and Helm release definitions
+- **clusters/production/** dir contains the production Helm release values
+- **clusters/staging/** dir contains the staging values
 
 ```
-./environments/
+./clusters/
 
 ├── base
 │   ├── infrastructure
@@ -159,7 +159,7 @@ The environments' configuration is structured into:
             └── kustomization.yaml
 ```
 
-In **environments/base/services/core/podinfo/** dir we have a HelmRelease with common values for all clusters:
+In **clusters/base/services/core/podinfo/** dir we have a HelmRelease with common values for all clusters:
 
 ```yaml
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -186,7 +186,7 @@ spec:
       path: "/*"
 ```
 
-In **environments/staging/<region>/** dir we have a Kustomize patch with the staging specific values:
+In **clusters/staging/<region>/** dir we have a Kustomize patch with the staging specific values:
 
 ```yaml
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -208,7 +208,7 @@ spec:
 Note that with ` version: ">=1.0.0-alpha"` we configure Flux to automatically upgrade the `HelmRelease` to the latest
 chart version including alpha, beta and pre-releases.
 
-In **environments/production/<region>/** dir we have a Kustomize patch with the production specific values:
+In **clusters/production/<region>/** dir we have a Kustomize patch with the production specific values:
 
 ```yaml
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -232,7 +232,7 @@ chart version (alpha, beta and pre-releases will be ignored).
 Infrastructure:
 
 ```
-./environments/base/infrastructure/
+./clusters/base/infrastructure/
 ├── nginx
 │   ├── kustomization.yaml
 │   ├── namespace.yaml
@@ -319,7 +319,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-sytem
-  path: ./environments/staging/eun/services
+  path: ./clusters/staging/eun/services
   prune: true
   validation: client
 ---
@@ -333,10 +333,10 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./environments/staging/eun/infrastructure
+  path: ./clusters/staging/eun/infrastructure
 ```
 
-Note that with `path: ./environments/staging/eun/services` we configure Flux to sync the staging Kustomize overlay and
+Note that with `path: ./clusters/staging/eun/services` we configure Flux to sync the staging Kustomize overlay and
 with `dependsOn` we tell Flux to create the infrastructure items before deploying the services.
 
 Fork this repository on your personal GitHub account and export your GitHub access token, username and repo name:
@@ -366,7 +366,7 @@ flux bootstrap github \
     --path=clusters/staging/eun
 ```
 
-The bootstrap command commits the environments for the Flux components in `clusters/staging/eun/flux-system` dir and
+The bootstrap command commits the clusters for the Flux components in `clusters/staging/eun/flux-system` dir and
 creates a deploy key with read-only access on GitHub, so it can pull changes inside the cluster.
 
 Watch for the Helm releases being install on staging:
@@ -453,15 +453,15 @@ Generate a Kubernetes secret manifest and encrypt the secret's data field with s
 kubectl -n redis create secret generic redis-auth \
 --from-literal=password=change-me \
 --dry-run=client \
--o yaml > environments/staging/eun/infrastructure/redis/redis-auth.yaml
+-o yaml > clusters/staging/eun/infrastructure/redis/redis-auth.yaml
 
 sops --encrypt \
 --pgp=1F3D1CED2F865F5E59CA564553241F147E7C5FA4 \
 --encrypted-regex '^(data|stringData)$' \
---in-place environments/staging/eun/infrastructure/redis/redis-auth.yaml
+--in-place clusters/staging/eun/infrastructure/redis/redis-auth.yaml
 ```
 
-Add the secret to `environments/staging/eun/infrastructure/redis/kustomization.yaml`:
+Add the secret to `clusters/staging/eun/infrastructure/redis/kustomization.yaml`:
 
 ```yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -544,7 +544,7 @@ Create a dir inside `clusters` with your cluster name and region:
 mkdir -p clusters/development/eun
 ```
 
-Copy the sync environments from staging:
+Copy the sync clusters from staging:
 
 ```sh
 cp -r clusters/staging/eun/infrastructure.yaml clusters/development/eun
@@ -553,7 +553,7 @@ cp clusters/staging/eun/services.yaml clusters/development/eun
 ```
 
 You could create a dev overlay inside `services` and `operations`, make sure to change the `spec.path`
-inside `clusters/development/eun/services.yaml` to `path: ./environments/development/eun`.
+inside `clusters/development/eun/services.yaml` to `path: ./clusters/development/eun`.
 
 Push the changes to main branch:
 

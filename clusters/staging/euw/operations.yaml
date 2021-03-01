@@ -10,6 +10,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./environments/staging/euw/operations
+  path: ./clusters/staging/euw/operations
   prune: true
   validation: client
