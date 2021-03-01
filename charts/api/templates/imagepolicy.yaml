@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.image.automation.namespace }}
 spec:
   imageRepositoryRef:
-    name: {{ template "api.name" . }}
+    name: {{ .Release.Namespace }}-{{ template "api.name" . }}
   policy:
     semver:
       range: {{ .Values.image.automation.semver.expr }}
