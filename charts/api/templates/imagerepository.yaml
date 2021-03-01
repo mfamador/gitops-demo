@@ -3,7 +3,6 @@ apiVersion: image.toolkit.fluxcd.io/v1alpha1
 kind: ImageRepository
 metadata:
   name: {{ template "api.name" . }}
-  namespace: {{ .Values.image.automation.namespace }}
 spec:
   image: "{{ .Values.image.repository }}"
   interval: {{ .Values.image.automation.interval }}

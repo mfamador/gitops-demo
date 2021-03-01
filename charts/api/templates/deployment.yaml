@@ -39,7 +39,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ include "api.name" . }}
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag }} # {"$imagepolicy": "flux-system:{{ include "api.name" . }}"}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }} # {"$imagepolicy": "{{ .Release.Namespace }}:{{ include "api.name" . }}"}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         {{- if .Values.config }}
         volumeMounts:
