@@ -5,6 +5,7 @@ metadata:
 spec:
   values:
     image:
+      tag: 1.0.1 # {"$imagepolicy": "flux-system:hello:tag"}
       automation:
         semver:
-          expr: 1.0.x
+          expr: 1.x.x
