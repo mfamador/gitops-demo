@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hello
+spec:
+  releaseName: hello
+  chart:
+    spec:
+      chart: charts/api
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: marcoamador/hello
+      tag: 1.0.0
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx

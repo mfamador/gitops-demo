@@ -4,3 +4,4 @@ namespace: data
 resources:
 - namespace.yaml
 - echo.yaml
+- hello.yaml

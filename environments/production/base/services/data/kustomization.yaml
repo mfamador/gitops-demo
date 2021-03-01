@@ -4,3 +4,4 @@ bases:
 - ../../../../base/services/data
 patchesStrategicMerge:
 - echo-patch.yaml
+- hello-patch.yaml

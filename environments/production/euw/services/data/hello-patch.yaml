@@ -1,0 +1,11 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hello
+spec:
+  values:
+    ingress:
+      hosts:
+      - host: hello.production.euw
+        paths:
+        - "/"
