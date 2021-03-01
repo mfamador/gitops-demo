@@ -3,6 +3,7 @@ apiVersion: image.toolkit.fluxcd.io/v1alpha1
 kind: ImagePolicy
 metadata:
   name: {{ template "api.name" . }}
+  namespace: {{ .Values.image.automation.namespace }}
 spec:
   imageRepositoryRef:
     name: {{ template "api.name" . }}
