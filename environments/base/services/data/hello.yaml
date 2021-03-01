@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: marcoamador/hello
-      tag: 1.0.1
+      tag: 1.0.0 # {"$imagepolicy": "flux-system:hello"}
       automation:
         semver:
           expr: 1.0.x
