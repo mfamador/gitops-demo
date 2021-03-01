@@ -539,24 +539,24 @@ cd ${GITHUB_REPO}
 Create a dir inside `clusters` with your cluster name and region:
 
 ```sh
-mkdir -p clusters/dev/eun
+mkdir -p clusters/development/eun
 ```
 
 Copy the sync environments from staging:
 
 ```sh
-cp -r clusters/staging/eun/infrastructure.yaml clusters/dev/eun
-cp clusters/staging/eun/operations.yaml clusters/dev/eun
-cp clusters/staging/eun/services.yaml clusters/dev/eun
+cp -r clusters/staging/eun/infrastructure.yaml clusters/development/eun
+cp clusters/staging/eun/operations.yaml clusters/development/eun
+cp clusters/staging/eun/services.yaml clusters/development/eun
 ```
 
 You could create a dev overlay inside `services` and `operations`, make sure to change the `spec.path`
-inside `clusters/dev/eun/services.yaml` to `path: ./environments/dev/eun`.
+inside `clusters/development/eun/services.yaml` to `path: ./environments/development/eun`.
 
 Push the changes to main branch:
 
 ```sh
-git add -A && git commit -m "add dev cluster" && git push
+git add -A && git commit -m "add development cluster" && git push
 ```
 
 Set the kubectl context and path to your dev cluster and bootstrap Flux:
@@ -564,12 +564,12 @@ Set the kubectl context and path to your dev cluster and bootstrap Flux:
 ```sh
 flux bootstrap github \
     --components-extra=image-reflector-controller,image-automation-controller \
-    --context=dev \
+    --context=development \
     --owner=${GITHUB_USER} \
     --repository=${GITHUB_REPO} \
     --branch=main \
     --personal \
-    --path=clusters/dev/eun
+    --path=clusters/development/eun
 ```
 
 ## Testing
