@@ -391,6 +391,8 @@ $ curl -H "Host: podinfo.staging.eun" http://localhost:8888/
 }
 ```
 
+![staging](assets/running.png "staging")
+
 Bootstrap Flux on production by setting the context and path to your production cluster:
 
 ```sh
