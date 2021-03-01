@@ -363,7 +363,8 @@ flux bootstrap github \
     --repository=${GITHUB_REPO} \
     --branch=main \
     --personal \
-    --path=clusters/staging/eun
+    --path=clusters/staging/eun \
+    --token-auth
 ```
 
 The bootstrap command commits the clusters for the Flux components in `clusters/staging/eun/flux-system` dir and
