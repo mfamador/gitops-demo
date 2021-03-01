@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: data
 resources:
 - namespace.yaml
+- automation.yaml
 - echo.yaml
 - hello.yaml
