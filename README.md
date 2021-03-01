@@ -358,6 +358,7 @@ Set the kubectl context to your `eun` staging cluster and bootstrap Flux:
 ```sh
 flux bootstrap github \
     --context=staging \
+    --components-extra=image-reflector-controller,image-automation-controller \
     --owner=${GITHUB_USER} \
     --repository=${GITHUB_REPO} \
     --branch=main \
@@ -535,18 +536,18 @@ git clone https://github.com/${GITHUB_USER}/${GITHUB_REPO}.git
 cd ${GITHUB_REPO}
 ```
 
-Create a dir inside `clusters` with your cluster name:
+Create a dir inside `clusters` with your cluster name and region:
 
 ```sh
-mkdir -p clusters/dev
+mkdir -p clusters/dev/eun
 ```
 
 Copy the sync environments from staging:
 
 ```sh
-cp clusters/staging/eun/infrastructure.yaml clusters/dev
-cp clusters/staging/eun/operations.yaml clusters/dev
-cp clusters/staging/eun/services.yaml clusters/dev
+cp -r clusters/staging/eun/infrastructure.yaml clusters/dev/eun
+cp clusters/staging/eun/operations.yaml clusters/dev/eun
+cp clusters/staging/eun/services.yaml clusters/dev/eun
 ```
 
 You could create a dev overlay inside `services` and `operations`, make sure to change the `spec.path`
@@ -562,6 +563,7 @@ Set the kubectl context and path to your dev cluster and bootstrap Flux:
 
 ```sh
 flux bootstrap github \
+    --components-extra=image-reflector-controller,image-automation-controller \
     --context=dev \
     --owner=${GITHUB_USER} \
     --repository=${GITHUB_REPO} \
