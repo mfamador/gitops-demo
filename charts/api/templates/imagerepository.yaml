@@ -1,0 +1,9 @@
+{{- if .Values.image.automation.enabled -}}
+apiVersion: image.toolkit.fluxcd.io/v1alpha1
+kind: ImageRepository
+metadata:
+  name: {{ template "api.name" . }}
+spec:
+  image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+  interval: {{ .Values.image.automation.interval }}
+  {{- end}}

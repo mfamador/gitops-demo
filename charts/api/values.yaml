@@ -5,6 +5,12 @@ image:
   repository: repository/image
   tag: 1.0.0
   pullPolicy: Always
+  automation:
+    enabled: true
+    interval: 1m0s
+    semver:
+      expr: 1.0.x
+
 
 imagePullSecrets: [ ]
 nameOverride: ""
